@@ -63,7 +63,6 @@ public class CommandDebug implements Command<CommandSourceStack> {
             System.out.println("railInfo.getType() = " + railInfo.getType());
             System.out.println("railInfo.getLevel() = " + railInfo.getLevel());
             System.out.println("railInfo.getDirection() = " + railInfo.getDirection());
-            System.out.println("railInfo.getRails() = " + railInfo.getRails());
 
             CitySphere sphere = CitySphere.getCitySphere(info.coord, dimInfo);
             System.out.println("sphere.cityCenter = " + sphere.getCenter());

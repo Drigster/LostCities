@@ -74,10 +74,12 @@ public class RegistryAssetRegistry<T extends ILostCityAsset, R> implements ILost
             try {
                 Registry<R> registry = level.registryAccess().registryOrThrow(registryKey);
                 R value = registry.get(ResourceKey.create(registryKey, name));
-                if (value instanceof IAsset asset) {
-                    asset.setRegistryName(name);
+                if(value != null){
+                    if (value instanceof IAsset asset) {
+                        asset.setRegistryName(name);
+                    }
+                    t = assetConstructor.apply(value);
                 }
-                t = assetConstructor.apply(value);
             } catch (Exception e) {
                 throw new RuntimeException("Error getting resource " + name + "!", e);
             }

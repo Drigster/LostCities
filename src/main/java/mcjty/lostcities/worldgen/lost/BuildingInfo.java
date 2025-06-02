@@ -894,16 +894,17 @@ public class BuildingInfo implements ILostChunkInfo {
             zBridge = rand.nextFloat() < profile.BRIDGE_CHANCE;
         }
 
-        if (rand.nextFloat() < profile.RAILWAY_DUNGEON_CHANCE) {
-            if (!hasBuilding || (Railway.RAILWAY_LEVEL_OFFSET < (cityLevel - cellars))) {
-                railDungeon = AssetRegistries.PARTS.getOrWarn(provider.getWorld(), getCityStyle().getRandomRailDungeon(rand));
-            } else {
-                railDungeon = null;
-            }
-        } else {
-            railDungeon = null;
-        }
-
+        // @TODO: DRIGSTER bring back rail dungeon
+        // if (rand.nextFloat() < profile.RAILWAY_DUNGEON_CHANCE) {
+        //     if (!hasBuilding || (Railway.RAILWAY_LEVEL_OFFSET < (cityLevel - cellars))) {
+        //         railDungeon = AssetRegistries.PARTS.getOrWarn(provider.getWorld(), getRailwayStyle().getRandomRailDungeon());
+        //     } else {
+        //         railDungeon = null;
+        //     }
+        // } else {
+        //     railDungeon = null;
+        // }
+        railDungeon = null;
         if (rand.nextFloat() < profile.BUILDING_FRONTCHANCE) {
             frontType = AssetRegistries.PARTS.getOrWarn(provider.getWorld(), getCityStyle().getRandomFront(rand));
         } else {

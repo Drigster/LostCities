@@ -329,7 +329,7 @@ public class LostCityTerrainFeature {
         if (railInfo.getType() != RailChunkType.NONE) {
             Railways.generateRailways(this, info, railInfo, heightmap);
         }
-        Railways.generateRailwayDungeons(this, info);
+        // Railways.generateRailwayDungeons(this, info);
 
 //        if (profile.isSpace()) {
 //            generateMonorails(info);
@@ -1185,8 +1185,7 @@ public class LostCityTerrainFeature {
 
         Railway.RailChunkInfo railInfo = info.getRailInfo();
         boolean canDoParks = info.getHighwayXLevel() != info.cityLevel && info.getHighwayZLevel() != info.cityLevel
-                && railInfo.getType() != RailChunkType.STATION_SURFACE
-                && (railInfo.getType() != RailChunkType.STATION_EXTENSION_SURFACE || railInfo.getLevel() < info.cityLevel);
+                && railInfo.getType() != RailChunkType.STATION_SURFACE;
 
         if (canDoParks) {
             int height = info.getCityGroundLevel();
@@ -1874,21 +1873,7 @@ public class LostCityTerrainFeature {
     }
 
     private BlockState transformBlockState(Transform transform, BlockState b) {
-        if (Tools.hasTag(b.getBlock(), LostTags.ROTATABLE_TAG)) {
-            b = b.rotate(transform.getMcRotation());
-        } else if (getRailStates().contains(b)) {
-            EnumProperty<RailShape> shapeProperty;
-            if (b.getBlock() == Blocks.RAIL) {
-                shapeProperty = RailBlock.SHAPE;
-            } else if (b.getBlock() == Blocks.POWERED_RAIL) {
-                shapeProperty = PoweredRailBlock.SHAPE;
-            } else {
-                throw new RuntimeException("Error with rail!");
-            }
-            RailShape shape = b.getValue(shapeProperty);
-            b = b.setValue(shapeProperty, transform.transform(shape));
-        }
-        return b;
+        return b.rotate(transform.getMcRotation());
     }
 
 

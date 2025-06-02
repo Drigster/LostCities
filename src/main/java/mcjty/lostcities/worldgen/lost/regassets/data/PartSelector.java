@@ -3,27 +3,22 @@ package mcjty.lostcities.worldgen.lost.regassets.data;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import java.util.Optional;
-
 /**
  * A selector for parts for monorail and railstation
  */
-public record PartSelector(MonorailParts monoRailParts, HighwayParts highwayParts, RailwayParts railwayParts) {
+public record PartSelector(MonorailParts monoRailParts, HighwayParts highwayParts) {
 
     public static final Codec<PartSelector> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     MonorailParts.CODEC.optionalFieldOf("monorails").forGetter(l -> l.monoRailParts.get()),
-                    HighwayParts.CODEC.optionalFieldOf("highways").forGetter(l -> l.highwayParts.get()),
-                    RailwayParts.CODEC.optionalFieldOf("railways").forGetter(l -> l.railwayParts.get())
-            ).apply(instance, (monorails, highways, railways) -> new PartSelector(
+                    HighwayParts.CODEC.optionalFieldOf("highways").forGetter(l -> l.highwayParts.get())
+            ).apply(instance, (monorails, highways) -> new PartSelector(
                     monorails.orElse(MonorailParts.DEFAULT),
-                    highways.orElse(HighwayParts.DEFAULT),
-                    railways.orElse(RailwayParts.DEFAULT))));
+                    highways.orElse(HighwayParts.DEFAULT))));
 
     public static final PartSelector DEFAULT = new PartSelector(
             MonorailParts.DEFAULT,
-            HighwayParts.DEFAULT,
-            RailwayParts.DEFAULT);
+            HighwayParts.DEFAULT);
 
     public Optional<PartSelector> get() {
         if (this == DEFAULT) {

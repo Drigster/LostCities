@@ -158,4 +158,10 @@ public class Building implements ILostCityBuilding {
         return partNames.get(random.nextInt(partNames.size()));
     }
 
+    public String getRandomPart(Random random) {
+        if (parts.isEmpty()) {
+            return null;
+        }
+        return parts.get(random.nextInt(parts.size())).getRight();
+    }
 }

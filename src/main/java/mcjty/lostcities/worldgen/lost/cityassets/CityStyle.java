@@ -24,9 +24,19 @@ public class CityStyle implements ILostCityCityStyle {
     private final List<ObjectSelector> fountainSelector = new ArrayList<>();
     private final List<ObjectSelector> stairSelector = new ArrayList<>();
     private final List<ObjectSelector> frontSelector = new ArrayList<>();
-    private final List<ObjectSelector> railDungeonSelector = new ArrayList<>();
     private final List<ObjectSelector> multiBuildingSelector = new ArrayList<>();
     private StreetParts streetParts = StreetParts.DEFAULT;
+
+    // Railway
+    private final List<ObjectSelector> railwayRailSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayRailEndSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayRailWaterSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayStationSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayStationUndergroundSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayStationStaircaseSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayStationStaircaseSurfaceSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayXJunctionSelector = new ArrayList<>();
+    private final List<ObjectSelector> railwayTJunctionSelector = new ArrayList<>();
 
     // Building settings
     private Integer minFloorCount;
@@ -90,9 +100,6 @@ public class CityStyle implements ILostCityCityStyle {
             corridorGlassBlock = s.getCorridorGlassBlock();
             corridorRoofBlock = s.getCorridorRoofBlock();
         });
-        object.getRailSettings().ifPresent(s -> {
-            railMainBlock = s.getRailMainBlock();
-        });
         object.getParkSettings().ifPresent(s -> {
             grassBlock = s.getGrassBlock();
             parkElevationBlock = s.getParkElevationBlock();
@@ -124,8 +131,19 @@ public class CityStyle implements ILostCityCityStyle {
             s.getFrontSelector().ifPresent(frontSelector::addAll);
             s.getParkSelector().ifPresent(parkSelector::addAll);
             s.getMultiBuildingSelector().ifPresent(multiBuildingSelector::addAll);
-            s.getRailDungeonSelector().ifPresent(railDungeonSelector::addAll);
             s.getStairSelector().ifPresent(stairSelector::addAll);
+            s.getRailwayRailSelector().ifPresent(railwayRailSelector::addAll);
+            s.getRailwayRailEndSelector().ifPresent(railwayRailEndSelector::addAll);
+            s.getRailwayRailWaterSelector().ifPresent(railwayRailWaterSelector::addAll);
+            s.getRailwayStationSelector().ifPresent(railwayStationSelector::addAll);
+            s.getRailwayStationUndergroundSelector()
+                    .ifPresent(railwayStationUndergroundSelector::addAll);
+            s.getRailwayStationStaircaseSelector()
+                    .ifPresent(railwayStationStaircaseSelector::addAll);
+            s.getRailwayStationStaircaseSurfaceSelector()
+                    .ifPresent(railwayStationStaircaseSurfaceSelector::addAll);
+            s.getRailwayXJunctionSelector().ifPresent(railwayXJunctionSelector::addAll);
+            s.getRailwayTJunctionSelector().ifPresent(railwayTJunctionSelector::addAll);
         });
     }
 
@@ -280,8 +298,18 @@ public class CityStyle implements ILostCityCityStyle {
                 fountainSelector.addAll(inheritFrom.fountainSelector);
                 stairSelector.addAll(inheritFrom.stairSelector);
                 frontSelector.addAll(inheritFrom.frontSelector);
-                railDungeonSelector.addAll(inheritFrom.railDungeonSelector);
                 multiBuildingSelector.addAll(inheritFrom.multiBuildingSelector);
+                railwayRailSelector.addAll(inheritFrom.railwayRailSelector);
+                railwayRailEndSelector.addAll(inheritFrom.railwayRailEndSelector);
+                railwayRailWaterSelector.addAll(inheritFrom.railwayRailWaterSelector);
+                railwayStationSelector.addAll(inheritFrom.railwayStationSelector);
+                railwayStationUndergroundSelector
+                        .addAll(inheritFrom.railwayStationUndergroundSelector);
+                railwayStationStaircaseSelector.addAll(inheritFrom.railwayStationStaircaseSelector);
+                railwayStationStaircaseSurfaceSelector
+                        .addAll(inheritFrom.railwayStationStaircaseSurfaceSelector);
+                railwayXJunctionSelector.addAll(inheritFrom.railwayXJunctionSelector);
+                railwayTJunctionSelector.addAll(inheritFrom.railwayTJunctionSelector);
                 if (explosionChance == null) {
                     explosionChance = inheritFrom.explosionChance;
                 }
@@ -376,10 +404,6 @@ public class CityStyle implements ILostCityCityStyle {
         return getRandomFromList(random, frontSelector);
     }
 
-    public String getRandomRailDungeon(Random random) {
-        return getRandomFromList(random, railDungeonSelector);
-    }
-
     public String getRandomPark(Random random) {
         return getRandomFromList(random, parkSelector);
     }
@@ -406,5 +430,41 @@ public class CityStyle implements ILostCityCityStyle {
 
     public List<ObjectSelector> getMultiBuildingSelector() {
         return multiBuildingSelector;
+    }
+
+    public String getRandomRailwayRail(Random random) {
+        return getRandomFromList(random, railwayRailSelector);
+    }
+
+    public String getRandomRailwayRailEnd(Random random) {
+        return getRandomFromList(random, railwayRailEndSelector);
+    }
+
+    public String getRandomRailwayRailWater(Random random) {
+        return getRandomFromList(random, railwayRailWaterSelector);
+    }
+
+    public String getRandomRailwayStation(Random random) {
+        return getRandomFromList(random, railwayStationSelector);
+    }
+
+    public String getRandomRailwayStationUnderground(Random random) {
+        return getRandomFromList(random, railwayStationUndergroundSelector);
+    }
+
+    public String getRandomRailwayStationStaircase(Random random) {
+        return getRandomFromList(random, railwayStationStaircaseSelector);
+    }
+
+    public String getRandomRailwayStationStaircaseSurface(Random random) {
+        return getRandomFromList(random, railwayStationStaircaseSurfaceSelector);
+    }
+
+    public String getRandomRailwayXJunction(Random random) {
+        return getRandomFromList(random, railwayXJunctionSelector);
+    }
+
+    public String getRandomRailwayTJunction(Random random) {
+        return getRandomFromList(random, railwayTJunctionSelector);
     }
 }

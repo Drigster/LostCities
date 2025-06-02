@@ -297,7 +297,8 @@ public class GuiLCConfig extends Screen {
                 int sz = z * 3 + 32;
                 int color = 0;
                 ChunkCoord c = new ChunkCoord(diminfo.dimension(), x, z);
-                Railway.RailChunkInfo type = Railway.getRailChunkType(c, diminfo, profile);
+                //Railway.RailChunkInfo type = Railway.getRailChunkType(c, diminfo, profile);
+                Railway.RailChunkInfo type = Railway.RailChunkInfo.NOTHING;
                 if (type.getType() != RailChunkType.NONE) {
                     color = 0x99992222;
                 }
