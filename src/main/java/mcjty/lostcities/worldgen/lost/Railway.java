@@ -5,11 +5,12 @@ import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.varia.ChunkCoord;
 import mcjty.lostcities.varia.QualityRandom;
 import mcjty.lostcities.worldgen.IDimensionInfo;
-import mcjty.lostcities.worldgen.lost.regassets.data.RailwayParts;
+import mcjty.lostcities.worldgen.lost.cityassets.AssetRegistries;
+import mcjty.lostcities.worldgen.lost.cityassets.CityStyle;
+import mcjty.lostcities.worldgen.lost.cityassets.MultiBuilding;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static mcjty.lostcities.api.RailChunkType.*;
@@ -111,7 +112,7 @@ public class Railway {
         int chunkX = key.chunkX();
         int chunkZ = key.chunkZ();
         QualityRandom randomRailChunkType = new QualityRandom(provider.getSeed() + chunkZ * 2600003897L + chunkX * 43600002517L);
-
+        CityStyle cityStyle = City.getCityStyle(key, provider, provider.getProfile());
         LostCityProfile profile = BuildingInfo.getProfile(key, provider);
 
         if (RAIL_INFO.containsKey(key)) {
@@ -141,14 +142,17 @@ public class Railway {
                         return RailChunkInfo.NOTHING;
                     }
                     if (!cityEast) {
-                        return new RailChunkInfo(RAILS_END_HERE, WEST, -3);
+                        String partName = cityStyle.getRandomRailwayRailEnd(randomRailChunkType);
+                        return createRailInfo(RAILS_END_HERE, WEST, RAILWAY_LEVEL_OFFSET, partName, key, provider);
                     }
                     if (!cityWest) {
-                        return new RailChunkInfo(RAILS_END_HERE, EAST, -3);
+                        String partName = cityStyle.getRandomRailwayRailEnd(randomRailChunkType);
+                        return createRailInfo(RAILS_END_HERE, EAST, RAILWAY_LEVEL_OFFSET, partName, key, provider);
                     }
                 }
                 // @todo: DRIGSTER change NORTH to north or south
-                return new RailChunkInfo(RAIL, EAST, RAILWAY_LEVEL_OFFSET);
+                String partName = cityStyle.getRandomRailwayRail(randomRailChunkType);
+                return createRailInfo(RAIL, EAST, RAILWAY_LEVEL_OFFSET, partName, key, provider);
             }
             // @todo: DRIGSTER change open roof station is currently not accounted for
             return getStationType(key, provider, profile, randomRailChunkType);
@@ -184,7 +188,8 @@ public class Railway {
                         return RailChunkInfo.NOTHING;
                     }
                 }
-                return new RailChunkInfo(T_JUNCTION, EAST, RAILWAY_LEVEL_OFFSET);
+                String partName = cityStyle.getRandomRailwayTJunction(randomRailChunkType);
+                return createRailInfo(T_JUNCTION, EAST, RAILWAY_LEVEL_OFFSET, partName, key, provider);
             }
             if (mz == 0 && mx == 15) {
                 if (profile.RAILWAYS_CAN_END) {
@@ -195,7 +200,8 @@ public class Railway {
                         return RailChunkInfo.NOTHING;
                     }
                 }
-                return new RailChunkInfo(T_JUNCTION, WEST, RAILWAY_LEVEL_OFFSET);
+                String partName = cityStyle.getRandomRailwayTJunction(randomRailChunkType);
+                return createRailInfo(T_JUNCTION, WEST, RAILWAY_LEVEL_OFFSET, partName, key, provider);
             }
             if (mz == 10 && mx == 5) {
                 if (profile.RAILWAYS_CAN_END) {
@@ -212,7 +218,8 @@ public class Railway {
                         }
                     }
                 }
-                return new RailChunkInfo(X_JUNCTION, EAST, RAILWAY_LEVEL_OFFSET);
+                String partName = cityStyle.getRandomRailwayXJunction(randomRailChunkType);
+                return createRailInfo(X_JUNCTION, EAST, RAILWAY_LEVEL_OFFSET, partName, key, provider);
             }
             if (mz == 10 && mx == 15) {
                 if (profile.RAILWAYS_CAN_END) {
@@ -229,7 +236,8 @@ public class Railway {
                         }
                     }
                 }
-                return new RailChunkInfo(X_JUNCTION, WEST, RAILWAY_LEVEL_OFFSET);
+                String partName = cityStyle.getRandomRailwayXJunction(randomRailChunkType);
+                return createRailInfo(X_JUNCTION, WEST, RAILWAY_LEVEL_OFFSET, partName, key, provider);
             }
             return RailChunkInfo.NOTHING;
         }
@@ -241,7 +249,8 @@ public class Railway {
                     return RailChunkInfo.NOTHING;
                 }
             }
-            return new RailChunkInfo(RAIL, NORTH, RAILWAY_LEVEL_OFFSET);
+            String partName = cityStyle.getRandomRailwayRail(randomRailChunkType);
+            return createRailInfo(RAIL, NORTH, RAILWAY_LEVEL_OFFSET, partName, key, provider);
         }
         if (mx == 15) {
             if (profile.RAILWAYS_CAN_END) {
@@ -251,7 +260,8 @@ public class Railway {
                     return RailChunkInfo.NOTHING;
                 }
             }
-            return new RailChunkInfo(RAIL, SOUTH, RAILWAY_LEVEL_OFFSET);
+            String partName = cityStyle.getRandomRailwayRail(randomRailChunkType);
+            return createRailInfo(RAIL, SOUTH, RAILWAY_LEVEL_OFFSET, partName, key, provider);
         }
 
         return RailChunkInfo.NOTHING;
@@ -286,7 +296,7 @@ public class Railway {
         }
 
         return r.nextDouble() < .5f 
-        ? createRailInfo(STATION_SURFACE, BI, RAILWAY_LEVEL_OFFSET, cityStyle.getRandomRailwayStation(r), coord, provider)
+        ? createRailInfo(STATION_SURFACE, BI, cityLevel, cityStyle.getRandomRailwayStation(r), coord, provider)
         : createRailInfo(STATION_UNDERGROUND, BI, RAILWAY_LEVEL_OFFSET, stationUnderground, coord, provider);
     }
 

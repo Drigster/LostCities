@@ -1,6 +1,8 @@
 package mcjty.lostcities.worldgen.gen;
 
 import mcjty.lostcities.api.RailChunkType;
+import mcjty.lostcities.varia.ChunkCoord;
+import mcjty.lostcities.varia.QualityRandom;
 import mcjty.lostcities.worldgen.ChunkDriver;
 import mcjty.lostcities.worldgen.ChunkHeightmap;
 import mcjty.lostcities.worldgen.IDimensionInfo;
@@ -9,9 +11,10 @@ import mcjty.lostcities.worldgen.lost.BuildingInfo;
 import mcjty.lostcities.worldgen.lost.Railway;
 import mcjty.lostcities.worldgen.lost.Transform;
 import mcjty.lostcities.worldgen.lost.cityassets.AssetRegistries;
+import mcjty.lostcities.worldgen.lost.cityassets.Building;
 import mcjty.lostcities.worldgen.lost.cityassets.BuildingPart;
-import mcjty.lostcities.worldgen.lost.regassets.data.RailwayParts;
-import net.minecraft.world.level.block.Blocks;
+import mcjty.lostcities.worldgen.lost.cityassets.CityStyle;
+import mcjty.lostcities.worldgen.lost.cityassets.MultiBuilding;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class Railways {
