@@ -1,6 +1,8 @@
 {
   "inherit": "citystyle_config",
-  "stuff_tags": ["rubble"],
+  "stuff_tags": [
+    "rubble"
+  ],
   "streetblocks": {
     "border": "y",
     "wall": "w",
@@ -198,14 +200,58 @@
         "value": "park_building2"
       }
     ],
-    "raildungeons": [
+    "railway_rail": [
       {
-        "factor": 1.0,
-        "value": "rail_dungeon1"
-      },
+        "factor": 1,
+        "value": "railway_rail"
+      }
+    ],
+    "railway_rail_end": [
       {
-        "factor": 1.0,
-        "value": "rail_dungeon2"
+        "factor": 1,
+        "value": "railway_rail_end"
+      }
+    ],
+    "railway_rail_water": [
+      {
+        "factor": 1,
+        "value": "railway_rail_water"
+      }
+    ],
+    "railway_station": [
+      {
+        "factor": 1,
+        "value": "railway_station"
+      }
+    ],
+    "railway_station_underground": [
+      {
+        "factor": 1,
+        "value": "railway_station_underground"
+      }
+    ],
+    "railway_station_staircase": [
+      {
+        "factor": 1,
+        "value": "railway_station_staircase"
+      }
+    ],
+    "railway_station_staircase_surface": [
+      {
+        "factor": 1,
+        "value": "railway_station_staircase_surface"
+      }
+    ],
+    "railway_x_junction": [
+      {
+        "factor": 1,
+        "value": "railway_x_junction"
+      }
+    ],
+    "railway_t_junction": [
+      {
+        "factor": 1,
+        "value": "railway_t_junction"
       }
     ]
   }

@@ -50,8 +50,11 @@ public class Railways {
         QualityRandom railwayRandom = new QualityRandom(
                 provider.getSeed() + ax * 5564338337L + az * 25564337621L);
         switch (railInfo.getDirection()) {
-            case NORTH:
-            case BI: {
+            case NORTH: {
+                break;
+            }
+            case EAST, BI: {
+                transform = Transform.ROTATE_90;
                 break;
             }
             case SOUTH: {
@@ -60,10 +63,6 @@ public class Railways {
             }
             case WEST: {
                 transform = Transform.ROTATE_270;
-                break;
-            }
-            case EAST: {
-                transform = Transform.ROTATE_90;
                 break;
             }
         }
@@ -247,7 +246,7 @@ public class Railways {
             }
             height = info.groundLevel + info.cityLevel * LostCityTerrainFeature.FLOORHEIGHT;
             part = AssetRegistries.PARTS.getOrThrow(provider.getWorld(),
-                    cityStyle.getRandomRailwayStationStaircase(railwayRandom));
+                    cityStyle.getRandomRailwayStationStaircaseSurface(railwayRandom));
             feature.generatePart(info, part, transform, 0, height, 0,
                     LostCityTerrainFeature.HardAirSetting.AIR);
         }
@@ -259,10 +258,35 @@ public class Railways {
         if (multiBuilding != null) {
             ChunkCoord origin = railInfo.getOrigin();
 
-            int relx = coord.chunkX() - origin.chunkX();
-            int relz = coord.chunkZ() - origin.chunkZ();
+            int sizeX = multiBuilding.getDimX();
+            int sizeZ = multiBuilding.getDimZ();
 
-            String buildingName = multiBuilding.getBuilding(relx, relz);
+            int relX = coord.chunkX() - origin.chunkX();
+            int relZ = coord.chunkZ() - origin.chunkZ();
+            switch (railInfo.getDirection()) {
+                case NORTH: {
+                    relX = coord.chunkZ() - origin.chunkZ();
+                    relZ = sizeX - 1 - (coord.chunkX() - origin.chunkX());
+                    break;
+                }
+                case EAST, BI: {
+                    relX = coord.chunkX() - origin.chunkX();
+                    relZ = coord.chunkZ() - origin.chunkZ();
+                    break;
+                }
+                case SOUTH: {
+                    relX = sizeZ - 1 - (coord.chunkZ() - origin.chunkZ());
+                    relZ = coord.chunkX() - origin.chunkX();
+                    break;
+                }
+                case WEST: {
+                    relX = sizeX - 1 - (coord.chunkX() - origin.chunkX());
+                    relZ = sizeZ - 1 - (coord.chunkZ() - origin.chunkZ());
+                    break;
+                }
+            }
+
+            String buildingName = multiBuilding.getBuilding(relX, relZ);
             Building building
                     = AssetRegistries.BUILDINGS.getOrThrow(provider.getWorld(), buildingName);
 
